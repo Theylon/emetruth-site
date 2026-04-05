@@ -478,13 +478,13 @@ export default function App() {
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
               <a
                 href="#contact"
-                className="cta-button rounded bg-gold px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
+                className="cta-button rounded-full bg-gold px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
               >
                 Talk To Us
               </a>
               <a
                 href="#proof"
-                className="rounded border border-primary/10 bg-white/50 px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-colors hover:border-primary/20 hover:bg-white/80"
+                className="secondary-button px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary"
               >
                 View Proof
               </a>
@@ -567,7 +567,7 @@ export default function App() {
               {programCards.map((card, index) => (
                 <motion.div
                   key={card.title}
-                  className={`execution-panel group flex h-72 flex-col justify-end bg-surface-alt p-12 transition-all duration-500 hover:bg-surface-elevated hover:ambient-shadow ${card.className}`}
+                  className={`execution-panel fold-card group flex h-72 flex-col justify-end bg-surface-alt p-12 transition-all duration-500 hover:bg-surface-elevated hover:ambient-shadow ${card.className}`}
                   variants={revealUp}
                   initial="hidden"
                   whileInView="visible"
@@ -704,7 +704,7 @@ export default function App() {
             <div className="flex items-end">
               <a
                 href="mailto:partners@emetruth.capital?subject=LP%20Inquiry"
-                className="cta-button inline-flex w-full items-center justify-center rounded bg-primary px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-85"
+                className="cta-button inline-flex w-full items-center justify-center rounded-full bg-primary px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-85"
               >
                 Inquire As An LP
               </a>
@@ -731,7 +731,7 @@ export default function App() {
             <div className="flex flex-col justify-center gap-6 sm:flex-row">
               <a
                 href="mailto:partners@emetruth.capital"
-                className="cta-button rounded bg-gold px-12 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
+                className="cta-button rounded-full bg-gold px-12 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
               >
                 Talk To Us
               </a>

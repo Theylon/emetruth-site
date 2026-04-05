@@ -153,23 +153,31 @@ html {
 
 .fold-card {
   background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 1.75rem;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition:
     transform 280ms ease,
     box-shadow 280ms ease,
-    background-color 280ms ease;
+    background-color 280ms ease,
+    border-color 280ms ease;
 }
 
 .fold-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 55px rgba(28, 27, 27, 0.08);
   background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(233, 193, 118, 0.18);
 }
 
 .execution-panel {
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 1.75rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .execution-panel::before {
@@ -182,6 +190,17 @@ html {
   background: linear-gradient(90deg, #e9c176 0%, rgba(233, 193, 118, 0) 70%);
   opacity: 0;
   transition: opacity 220ms ease;
+}
+
+.execution-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4.5rem;
+  background: #e9c176;
+  opacity: 0.9;
 }
 
 .execution-panel:hover::before {
@@ -228,6 +247,26 @@ html {
   box-shadow: 0 18px 36px rgba(233, 193, 118, 0.22);
 }
 
+.secondary-button {
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.64);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    transform 240ms ease,
+    border-color 240ms ease,
+    background-color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.secondary-button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(233, 193, 118, 0.22);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 16px 34px rgba(28, 27, 27, 0.06);
+}
+
 @media (max-width: 767px) {
   body::before {
     background-size: 48px 48px;
@@ -240,7 +279,8 @@ html {
 
   .fold-card:hover,
   .intelligence-panel:hover,
-  .cta-button:hover {
+  .cta-button:hover,
+  .secondary-button:hover {
     transform: none;
   }
 }
