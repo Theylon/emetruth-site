@@ -82,6 +82,10 @@ Differentiators:
 - Exclusive relationships with external data providers that improve pricing confidence
 - Operator-level familiarity with the mechanics and constraints of prediction platforms
 
+Reference frame:
+
+- The closest public analog is the role firms like Wintermute and GSR played in crypto markets, but applied specifically to prediction markets
+
 Important note:
 
 Avoid naming individual data partners publicly unless there is a specific reason and approval to do so.

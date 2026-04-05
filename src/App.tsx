@@ -250,21 +250,21 @@ function BackgroundScene() {
 const problemCards = [
   {
     id: '01',
-    heading: 'The Platform Problem',
-    title: 'Weak Liquidity Breaks Market Quality',
+    heading: 'The Problem',
+    title: 'Thin books kill momentum',
     body:
-      'Prediction markets lose momentum when order books stay thin, spreads stay wide, and new contracts fail to feel tradable from day one.',
-    points: ['Thin books slow participation', 'Weak launches damage retention'],
+      'When spreads stay wide and size disappears, traders stop trusting the market. Volume slips, launches feel weak, and retention suffers.',
+    points: ['Wide spreads push traders away', 'Weak launches are hard to recover'],
     className: '',
     sectionId: 'problem',
   },
   {
     id: '02',
-    heading: 'The Operator Outcome',
-    title: 'Better Markets Keep Traders Trading',
+    heading: 'The Outcome',
+    title: 'Better markets keep users',
     body:
-      'For prediction market operators, liquidity is not cosmetic. Better depth, tighter pricing, and stronger launches create the trading experience that drives repeat usage.',
-    points: ['Higher market confidence', 'Stronger trader retention'],
+      'For operators, liquidity is product quality. Better depth and cleaner pricing make markets easier to trade and easier to come back to.',
+    points: ['Better trader experience', 'Stronger retention'],
     className: 'pt-0 md:pt-32 pl-0 md:pl-12',
     sectionId: 'outcome',
   },
@@ -273,7 +273,7 @@ const problemCards = [
 const programCards = [
   {
     title: 'Ongoing Market Making',
-    body: 'Continuous quoting for live venues to support tighter spreads and more reliable depth.',
+    body: 'Continuous quoting for live venues to improve spread quality and visible depth.',
     icon: (
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path
@@ -298,7 +298,7 @@ const programCards = [
         />
       </svg>
     ),
-    body: 'Initial support for new contracts and new venues so markets open with stronger trading conditions.',
+    body: 'Support for new contracts and new venues so markets open with real liquidity.',
     className: 'mt-0 md:mt-16',
   },
   {
@@ -313,7 +313,7 @@ const programCards = [
         />
       </svg>
     ),
-    body: 'Input on market openings and venue structure so liquidity support starts from a better baseline.',
+    body: 'Input on which markets to open and how to structure them for better early trading.',
     className: '',
   },
   {
@@ -328,7 +328,7 @@ const programCards = [
         />
       </svg>
     ),
-    body: 'Direct collaboration around APIs, testing, and execution paths when venues need infrastructure support to trade well.',
+    body: 'Hands-on work around APIs, testing, and execution when venue infrastructure needs improvement.',
     className: 'mt-0 md:mt-16',
   },
 ];
@@ -336,21 +336,21 @@ const programCards = [
 const specialistCards = [
   {
     title: 'Built for Prediction Markets',
-    body: 'Prediction-market microstructure is not generic crypto flow. We focus on this category because market quality here depends on specialist execution and pricing discipline.',
+    body: 'Prediction markets do not trade like generic crypto pairs. Openings, event repricing, and inventory risk all behave differently.',
     className: 'bg-surface',
     bodyClassName: 'text-muted',
     titleClassName: '',
   },
   {
     title: 'Exclusive Pricing Inputs',
-    body: 'Our pricing stack incorporates exclusive external data relationships that help us quote with higher confidence when new markets open or fast-moving events reprice.',
+    body: 'We use external data relationships to price new markets with more conviction than a generic market maker can.',
     className: 'executive-card md:-translate-y-8',
     bodyClassName: 'text-gray-400',
     titleClassName: 'text-white',
   },
   {
     title: 'Operator-Level Collaboration',
-    body: 'We work with venues as a market-making partner, not as a detached counterparty. The goal is stronger launches, better trading conditions, and healthier market retention.',
+    body: 'We work directly with venues on launches, market quality, and infrastructure instead of just showing up as flow.',
     className: 'bg-surface',
     bodyClassName: 'text-muted',
     titleClassName: '',
@@ -359,24 +359,24 @@ const specialistCards = [
 
 const proofCards = [
   {
-    title: '$9M Routed Through the Engine',
-    body: 'More than $9M in execution volume moved through EmeTruth infrastructure over one quarter through an externally used interface.',
+    title: '$9M Through The Engine',
+    body: 'More than $9M in execution volume moved through EmeTruth infrastructure over one quarter.',
   },
   {
     title: 'Built for Onchain Venues',
-    body: 'The execution stack is designed around onchain prediction-market venues and the operational realities of trading order-book-based markets.',
+    body: 'The stack is built around onchain prediction markets and the mechanics of order-book trading.',
   },
   {
-    title: 'Platform Demand Already Exists',
-    body: 'Current venue conversations point to the same need: help markets launch cleaner, trade tighter, and retain users for longer.',
+    title: 'Operators Already Ask For This',
+    body: 'Venue conversations keep pointing to the same need: cleaner launches, tighter books, and better retention.',
   },
 ];
 
 const navItems = [
-  {href: '#program', label: 'Liquidity Program', sectionId: 'program'},
-  {href: '#specialist', label: 'Why Specialist', sectionId: 'specialist'},
+  {href: '#program', label: 'Program', sectionId: 'program'},
+  {href: '#specialist', label: 'Why Us', sectionId: 'specialist'},
   {href: '#proof', label: 'Proof', sectionId: 'proof'},
-  {href: '#lps', label: 'For LPs', sectionId: 'lps'},
+  {href: '#lps', label: 'LPs', sectionId: 'lps'},
 ];
 
 const revealUp = {
@@ -460,25 +460,19 @@ export default function App() {
             variants={revealUp}
           >
             <p className="mb-8 font-headline text-sm font-bold uppercase tracking-[0.2em] text-gold">
-              Liquidity Infrastructure For Prediction Markets
+              For Prediction Markets
             </p>
-            <h1 className="mb-12 font-headline text-6xl leading-[0.9] font-extrabold tracking-tighter md:text-8xl lg:text-[7.5rem]">
-              THE LIQUIDITY
+            <h1 className="mb-12 max-w-5xl font-headline text-5xl leading-[0.94] font-extrabold tracking-tighter md:text-7xl lg:text-[6.25rem]">
+              Liquidity Layer
               <br />
-              <span className="text-gold">LAYER</span>
+              <span className="text-gold">that scales</span>
               <br />
-              THAT LETS
-              <br />
-              PREDICTION
-              <br />
-              MARKETS SCALE.
+              Prediction Markets.
             </h1>
             <div className="mt-16 flex flex-col items-start gap-8 md:flex-row md:gap-16">
               <div className="h-24 w-1 shrink-0 bg-gold" />
               <p className="max-w-2xl text-lg leading-relaxed font-medium text-muted md:text-xl">
-                EmeTruth partners with prediction market operators to improve market quality
-                through specialist market making, launch support, and pricing infrastructure
-                built for onchain venues.
+                EmeTruth makes prediction markets liquid and efficient.
               </p>
             </div>
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
@@ -492,7 +486,7 @@ export default function App() {
                 href="#proof"
                 className="rounded border border-primary/10 bg-white/50 px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-colors hover:border-primary/20 hover:bg-white/80"
               >
-                See The Proof
+                View Proof
               </a>
             </div>
           </motion.div>
@@ -502,10 +496,10 @@ export default function App() {
           <div className="second-fold__veil" aria-hidden="true" />
           <div className="mx-auto mb-16 max-w-4xl">
             <p className="mb-5 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
-              Market Quality Is The Bottleneck
+              The Bottleneck
             </p>
             <h2 className="max-w-4xl font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
-              Prediction markets do not scale when trading conditions feel unreliable.
+              If markets feel thin, traders leave.
             </h2>
           </div>
           <div className="mx-auto grid max-w-7xl grid-cols-1 gap-24 md:grid-cols-2">
@@ -557,24 +551,22 @@ export default function App() {
               viewport={{once: true, amount: 0.3}}
             >
               <p className="mb-6 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
-                The Liquidity Program
+                What We Do
               </p>
               <h2 className="mb-8 font-headline text-5xl leading-[1.1] font-extrabold uppercase tracking-tighter md:text-6xl">
-                What Platforms
+                Market Making
                 <br />
-                Buy From Us
+                For This Category
               </h2>
               <p className="mb-12 text-lg leading-relaxed text-muted">
-                EmeTruth acts as a specialist market-making partner for live and emerging
-                prediction venues. The engagement is built around healthier launches, stronger
-                books, and better trader retention over time.
+                Built for prediction markets that need reliable liquidity from day one.
               </p>
 
               <div className="relative bg-surface-alt p-10">
                 <div className="absolute top-0 left-0 h-full w-1 bg-primary" />
-                <div className="mb-2 font-headline text-5xl font-extrabold">Retainer</div>
+                <div className="mb-2 font-headline text-5xl font-extrabold">Retainer + Rebates</div>
                 <div className="font-headline text-xs font-bold uppercase tracking-widest text-muted">
-                  Core Commercial Structure, With Hybrid Terms Where Appropriate
+                  Typical structure, depending on the venue
                 </div>
               </div>
             </motion.div>
@@ -611,17 +603,17 @@ export default function App() {
               viewport={{once: true, amount: 0.35}}
             >
               <p className="mb-6 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
-                Why A Specialist Partner
+                Why Us
               </p>
               <h2 className="mb-8 font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
-                Specialist Liquidity for
+                Why Specialist
                 <br />
-                Prediction Markets
+                Liquidity Wins
               </h2>
               <p className="mx-auto max-w-2xl text-lg text-muted">
-                General crypto market making is not enough for this category. Prediction markets
-                need tighter quoting, stronger launch support, and pricing inputs that reflect
-                fast-moving event risk.
+                Prediction markets are not generic crypto markets. The closest reference is what
+                firms like Wintermute and GSR brought to crypto market structure, applied here
+                with full focus on prediction markets.
               </p>
             </motion.div>
 
@@ -661,13 +653,13 @@ export default function App() {
                 Proof Of Execution
               </p>
               <h2 className="mb-8 font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
-                Real Infrastructure,
+                Built,
                 <br />
-                Not Just A Thesis
+                Not Pitched
               </h2>
               <p className="max-w-2xl text-lg leading-relaxed text-muted">
-                EmeTruth is early, but the core execution capability is already built and used.
-                The point of the platform story is simple: we are not starting from slides.
+                The core stack is already live and has handled real flow. We are not starting
+                from a deck.
               </p>
             </motion.div>
 
@@ -708,12 +700,11 @@ export default function App() {
               <h2 className="mb-6 font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
                 Selective Capital
                 <br />
-                Partnerships
+                Partners
               </h2>
               <p className="max-w-2xl text-lg leading-relaxed text-muted">
-                EmeTruth is open to selective conversations with LPs and strategic capital
-                partners whose capital can support inventory depth, platform growth, and category
-                expansion. This path is secondary to platform partnerships and handled directly.
+                We are open to selective conversations with LPs and strategic capital partners.
+                That path stays secondary and handled directly.
               </p>
             </div>
             <div className="flex items-end">
@@ -736,13 +727,12 @@ export default function App() {
             viewport={{once: true, amount: 0.4}}
           >
             <h2 className="mb-16 font-headline text-6xl leading-[0.9] font-extrabold uppercase tracking-tighter md:text-8xl">
-              Build Better
+              Need better
               <br />
-              Markets.
+              markets?
             </h2>
             <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted">
-              If you run a prediction market and need stronger liquidity, cleaner launches, or a
-              specialist market-making partner, start the conversation here.
+              For conversations around liquidity, partnerships, or capital.
             </p>
             <div className="flex flex-col justify-center gap-6 sm:flex-row">
               <a
