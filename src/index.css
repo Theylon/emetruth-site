@@ -171,6 +171,16 @@ html {
   border-color: rgba(233, 193, 118, 0.18);
 }
 
+.fold-card.executive-card {
+  background: linear-gradient(135deg, #141c24 0%, #000000 100%);
+  border-color: rgba(233, 193, 118, 0.08);
+}
+
+.fold-card.executive-card:hover {
+  background: linear-gradient(135deg, #18222c 0%, #040404 100%);
+  border-color: rgba(233, 193, 118, 0.18);
+}
+
 .execution-panel {
   position: relative;
   overflow: hidden;
