@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {motion, useScroll, useTransform} from 'motion/react';
+import {motion, useReducedMotion, useScroll, useTransform} from 'motion/react';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -12,8 +12,11 @@ type FloatingObject = {
 
 function BackgroundScene() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (reduceMotion) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const modelBase = new URL('models/', document.baseURI).toString();
@@ -242,7 +245,7 @@ function BackgroundScene() {
       });
       renderer.dispose();
     };
-  }, []);
+  }, [reduceMotion]);
 
   return <canvas id="webgl-canvas" ref={canvasRef} aria-hidden="true" />;
 }
@@ -276,12 +279,7 @@ const programCards = [
     body: 'Continuous quoting for live venues to improve spread quality and visible depth.',
     icon: (
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-          strokeWidth="2"
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
+        <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
     className: '',
@@ -290,12 +288,7 @@ const programCards = [
     title: 'Launch Seeding',
     icon: (
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-          strokeWidth="2"
-          d="M12 3v18m9-9H3m15.5-5.5l-11 11"
-        />
+        <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M12 3v18m9-9H3m15.5-5.5l-11 11" />
       </svg>
     ),
     body: 'Support for new contracts and new venues so markets open with real liquidity.',
@@ -305,12 +298,7 @@ const programCards = [
     title: 'Market Design Advice',
     icon: (
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-          strokeWidth="2"
-          d="M4 6h16M4 12h10M4 18h7"
-        />
+        <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 6h16M4 12h10M4 18h7" />
       </svg>
     ),
     body: 'Input on which markets to open and how to structure them for better early trading.',
@@ -320,12 +308,7 @@ const programCards = [
     title: 'Venue Collaboration',
     icon: (
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-          strokeWidth="2"
-          d="M8 12h8M12 8v8M4 7h4v10H4zM16 7h4v10h-4z"
-        />
+        <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M8 12h8M12 8v8M4 7h4v10H4zM16 7h4v10h-4z" />
       </svg>
     ),
     body: 'Hands-on work around APIs, testing, and execution when venue infrastructure needs improvement.',
@@ -388,8 +371,9 @@ const revealUp = {
   },
 };
 
-export default function App() {
+export default function AppPolished() {
   const [activeSection, setActiveSection] = useState<string>('program');
+  const reduceMotion = useReducedMotion();
   const {scrollYProgress} = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.18], [0, -80]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0.35]);
@@ -421,11 +405,17 @@ export default function App() {
   }, []);
 
   return (
-    <div className="font-body selection:bg-gold selection:text-primary">
+    <div className="font-body selection:bg-gold selection:text-primary polished-page">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <BackgroundScene />
 
-      <nav className="glass-nav fixed top-0 z-50 flex w-full items-center justify-between px-8 py-6 transition-all duration-300">
-        <div className="font-headline text-xl font-extrabold uppercase tracking-tighter">
+      <nav
+        aria-label="Primary navigation"
+        className="glass-nav fixed top-0 z-50 flex w-full items-center justify-between px-4 py-4 md:px-8 md:py-6 transition-all duration-300"
+      >
+        <div className="font-headline text-base font-extrabold uppercase tracking-tighter md:text-xl">
           EmeTruth
         </div>
         <div className="hidden items-center gap-12 md:flex">
@@ -433,6 +423,7 @@ export default function App() {
             <a
               key={item.sectionId}
               href={item.href}
+              aria-current={activeSection === item.sectionId ? 'location' : undefined}
               data-active={activeSection === item.sectionId}
               className="nav-link font-headline text-xs font-bold uppercase tracking-widest text-muted transition-colors hover:text-primary"
             >
@@ -442,49 +433,65 @@ export default function App() {
         </div>
         <a
           href="#contact"
-          className="rounded bg-gold px-8 py-4 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
+          className="rounded bg-gold px-4 py-3 text-[10px] font-headline font-bold uppercase tracking-[0.18em] text-primary transition-opacity hover:opacity-80 md:px-8 md:py-4 md:text-xs md:tracking-widest"
         >
           Talk To Us
         </a>
       </nav>
 
-      <main className="relative z-10 pt-32">
+      <div className="mobile-section-nav px-4 pt-24 md:hidden">
+        <div className="mobile-section-nav__inner">
+          {navItems.map((item) => (
+            <a
+              key={item.sectionId}
+              href={item.href}
+              aria-current={activeSection === item.sectionId ? 'location' : undefined}
+              data-active={activeSection === item.sectionId}
+              className="mobile-section-nav__link"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <main id="main-content" className="relative z-10 pt-6 md:pt-32">
         <motion.section
-          style={{y: heroY, opacity: heroOpacity}}
-          className="flex min-h-[85vh] items-center px-8 md:px-16 lg:px-24"
+          style={reduceMotion ? undefined : {y: heroY, opacity: heroOpacity}}
+          className="flex min-h-[72vh] items-center px-4 py-12 md:min-h-[85vh] md:px-16 lg:px-24"
         >
           <motion.div
             className="w-full max-w-6xl"
-            initial="hidden"
+            initial={reduceMotion ? false : 'hidden'}
             animate="visible"
             variants={revealUp}
           >
-            <p className="mb-8 font-headline text-sm font-bold uppercase tracking-[0.2em] text-gold">
+            <p className="mb-6 font-headline text-[11px] font-bold uppercase tracking-[0.18em] text-gold md:mb-8 md:text-sm md:tracking-[0.2em]">
               For Prediction Markets
             </p>
-            <h1 className="mb-12 max-w-5xl font-headline text-5xl leading-[0.94] font-extrabold tracking-tighter md:text-7xl lg:text-[6.25rem]">
+            <h1 className="mb-8 max-w-5xl font-headline text-[2.9rem] leading-[0.92] font-extrabold tracking-tighter md:mb-12 md:text-7xl lg:text-[6.25rem]">
               Liquidity Layer
               <br />
               <span className="text-gold">that scales</span>
               <br />
               Prediction Markets.
             </h1>
-            <div className="mt-16 flex flex-col items-start gap-8 md:flex-row md:gap-16">
-              <div className="h-24 w-1 shrink-0 bg-gold" />
-              <p className="max-w-2xl text-lg leading-relaxed font-medium text-muted md:text-xl">
+            <div className="mt-10 flex flex-col items-start gap-5 md:mt-16 md:flex-row md:gap-16">
+              <div className="h-16 w-1 shrink-0 bg-gold md:h-24" />
+              <p className="max-w-2xl text-base leading-relaxed font-medium text-muted md:text-xl">
                 EmeTruth makes prediction markets liquid and efficient.
               </p>
             </div>
-            <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row md:mt-12 md:gap-4">
               <a
                 href="#contact"
-                className="cta-button rounded-full bg-gold px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
+                className="cta-button w-full rounded-full bg-gold px-8 py-4 text-center font-headline text-[11px] font-bold uppercase tracking-[0.16em] text-primary transition-opacity hover:opacity-80 sm:w-auto md:px-10 md:py-5 md:text-xs md:tracking-widest"
               >
                 Talk To Us
               </a>
               <a
                 href="#proof"
-                className="secondary-button px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary"
+                className="secondary-button w-full px-8 py-4 text-center font-headline text-[11px] font-bold uppercase tracking-[0.16em] text-primary sm:w-auto md:px-10 md:py-5 md:text-xs md:tracking-widest"
               >
                 View Proof
               </a>
@@ -492,24 +499,25 @@ export default function App() {
           </motion.div>
         </motion.section>
 
-        <section id="problem" className="second-fold relative px-8 py-32 md:px-16 lg:px-24">
+        <section id="problem" className="second-fold relative px-4 py-20 md:px-16 md:py-32 lg:px-24">
           <div className="second-fold__veil" aria-hidden="true" />
-          <div className="mx-auto mb-16 max-w-4xl">
-            <p className="mb-5 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
+          <div className="section-divider mx-auto mb-16 max-w-7xl" aria-hidden="true" />
+          <div className="mx-auto mb-12 max-w-4xl md:mb-16">
+            <p className="mb-4 font-headline text-[11px] font-bold uppercase tracking-[0.18em] text-gold md:mb-5 md:text-xs md:tracking-[0.2em]">
               Market Quality
             </p>
-            <h2 className="max-w-4xl font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
+            <h2 className="max-w-4xl font-headline text-3xl font-extrabold uppercase tracking-tighter md:text-5xl">
               If markets are thin, traders leave.
             </h2>
           </div>
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-24 md:grid-cols-2">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-14 md:grid-cols-2 md:gap-24">
             {marketCards.map((card, index) => (
               <motion.div
                 key={card.id}
                 id={card.sectionId}
                 className={`space-y-12 pr-0 md:pr-12 ${card.className}`}
                 variants={revealUp}
-                initial="hidden"
+                initial={reduceMotion ? false : 'hidden'}
                 whileInView="visible"
                 viewport={{once: true, amount: 0.25}}
                 transition={{delay: index * 0.1}}
@@ -520,7 +528,7 @@ export default function App() {
                     {card.heading}
                   </h2>
                 </div>
-                <div className="ambient-shadow fold-card relative bg-surface-elevated p-12">
+                <div className="ambient-shadow fold-card relative bg-surface-elevated p-8 md:p-12">
                   <div className="absolute top-0 left-0 h-16 w-1 bg-gold" />
                   <h3 className="mb-6 font-headline text-2xl font-bold">{card.title}</h3>
                   <p className="mb-10 leading-relaxed text-muted">{card.body}</p>
@@ -541,24 +549,25 @@ export default function App() {
           </div>
         </section>
 
-        <section id="program" className="px-8 py-48 md:px-16 lg:px-24">
+        <section id="program" className="px-4 py-24 md:px-16 md:py-48 lg:px-24">
+          <div className="section-divider mx-auto mb-16 max-w-7xl" aria-hidden="true" />
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 lg:grid-cols-12">
             <motion.div
               className="lg:col-span-5"
               variants={revealUp}
-              initial="hidden"
+              initial={reduceMotion ? false : 'hidden'}
               whileInView="visible"
               viewport={{once: true, amount: 0.3}}
             >
-              <p className="mb-6 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
+              <p className="mb-4 font-headline text-[11px] font-bold uppercase tracking-[0.18em] text-gold md:mb-6 md:text-xs md:tracking-[0.2em]">
                 What We Do
               </p>
-              <h2 className="mb-8 font-headline text-5xl leading-[1.1] font-extrabold uppercase tracking-tighter md:text-6xl">
+              <h2 className="mb-6 font-headline text-4xl leading-[1.04] font-extrabold uppercase tracking-tighter md:mb-8 md:text-6xl">
                 Making
                 <br />
                 Prediction Markets
               </h2>
-              <p className="mb-12 text-lg leading-relaxed text-muted">
+              <p className="mb-8 text-base leading-relaxed text-muted md:mb-12 md:text-lg">
                 Built for prediction markets that need reliable liquidity from day one.
               </p>
             </motion.div>
@@ -567,17 +576,17 @@ export default function App() {
               {programCards.map((card, index) => (
                 <motion.div
                   key={card.title}
-                  className={`execution-panel fold-card group flex h-72 flex-col justify-end bg-surface-alt p-12 transition-all duration-500 hover:bg-surface-elevated hover:ambient-shadow ${card.className}`}
+                  className={`execution-panel fold-card group flex min-h-64 flex-col justify-end bg-surface-alt p-8 transition-all duration-500 hover:bg-surface-elevated hover:ambient-shadow md:h-72 md:p-12 ${card.className}`}
                   variants={revealUp}
-                  initial="hidden"
+                  initial={reduceMotion ? false : 'hidden'}
                   whileInView="visible"
                   viewport={{once: true, amount: 0.3}}
                   transition={{delay: index * 0.12}}
                 >
                   <div className="mb-8 h-10 w-10 text-gold">{card.icon}</div>
-                  <h4 className="font-headline text-lg font-extrabold uppercase tracking-wide">
+                  <h3 className="font-headline text-lg font-extrabold uppercase tracking-wide">
                     {card.title}
-                  </h4>
+                  </h3>
                   <p className="mt-4 max-w-xs leading-relaxed text-muted">{card.body}</p>
                 </motion.div>
               ))}
@@ -585,24 +594,25 @@ export default function App() {
           </div>
         </section>
 
-        <section id="specialist" className="intelligence-fold px-8 py-32 md:px-16 lg:px-24">
+        <section id="specialist" className="intelligence-fold px-4 py-20 md:px-16 md:py-32 lg:px-24">
+          <div className="section-divider mx-auto mb-16 max-w-7xl border-white/10" aria-hidden="true" />
           <div className="mx-auto max-w-7xl">
             <motion.div
               className="mb-24 text-center"
               variants={revealUp}
-              initial="hidden"
+              initial={reduceMotion ? false : 'hidden'}
               whileInView="visible"
               viewport={{once: true, amount: 0.35}}
             >
-              <p className="mb-6 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
+              <p className="mb-4 font-headline text-[11px] font-bold uppercase tracking-[0.18em] text-gold md:mb-6 md:text-xs md:tracking-[0.2em]">
                 Unfair Advantage
               </p>
-              <h2 className="mb-8 font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
+              <h2 className="mb-6 font-headline text-3xl font-extrabold uppercase tracking-tighter md:mb-8 md:text-5xl">
                 Better Inputs
                 <br />
                 Better Markets
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-muted">
+              <p className="mx-auto max-w-2xl text-base text-muted md:text-lg">
                 Our edge is not just making markets. It is having access to better information,
                 and the internal workflows to structure that information faster than the market.
               </p>
@@ -612,17 +622,15 @@ export default function App() {
               {specialistCards.map((card, index) => (
                 <motion.div
                   key={card.title}
-                  className={`ambient-shadow fold-card intelligence-panel relative overflow-hidden p-12 ${card.className}`}
+                  className={`ambient-shadow fold-card intelligence-panel relative overflow-hidden p-8 md:p-12 ${card.className}`}
                   variants={revealUp}
-                  initial="hidden"
+                  initial={reduceMotion ? false : 'hidden'}
                   whileInView="visible"
                   viewport={{once: true, amount: 0.28}}
                   transition={{delay: index * 0.08}}
                 >
                   <div className="absolute top-0 left-0 h-16 w-1 bg-gold" />
-                  <h3
-                    className={`mb-6 font-headline text-xl font-extrabold uppercase ${card.titleClassName}`}
-                  >
+                  <h3 className={`mb-6 font-headline text-xl font-extrabold uppercase ${card.titleClassName}`}>
                     {card.title}
                   </h3>
                   <p className={`${card.bodyClassName} leading-relaxed`}>{card.body}</p>
@@ -632,24 +640,25 @@ export default function App() {
           </div>
         </section>
 
-        <section id="proof" className="px-8 py-32 md:px-16 lg:px-24">
+        <section id="proof" className="px-4 py-20 md:px-16 md:py-32 lg:px-24">
+          <div className="section-divider mx-auto mb-16 max-w-7xl" aria-hidden="true" />
           <div className="mx-auto max-w-7xl">
             <motion.div
               className="mb-20 max-w-3xl"
               variants={revealUp}
-              initial="hidden"
+              initial={reduceMotion ? false : 'hidden'}
               whileInView="visible"
               viewport={{once: true, amount: 0.3}}
             >
-              <p className="mb-6 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
+              <p className="mb-4 font-headline text-[11px] font-bold uppercase tracking-[0.18em] text-gold md:mb-6 md:text-xs md:tracking-[0.2em]">
                 Execution Engine
               </p>
-              <h2 className="mb-8 font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
+              <h2 className="mb-6 font-headline text-3xl font-extrabold uppercase tracking-tighter md:mb-8 md:text-5xl">
                 Engine
                 <br />
                 In Use
               </h2>
-              <p className="max-w-2xl text-lg leading-relaxed text-muted">
+              <p className="max-w-2xl text-base leading-relaxed text-muted md:text-lg">
                 The engine is already live, built for fast execution, and keeps activity private
                 until committed. It has already carried real volume in market.
               </p>
@@ -659,9 +668,9 @@ export default function App() {
               {proofCards.map((card, index) => (
                 <motion.div
                   key={card.title}
-                  className="ambient-shadow fold-card relative overflow-hidden bg-surface-elevated p-12"
+                  className="ambient-shadow fold-card relative overflow-hidden bg-surface-elevated p-8 md:p-12"
                   variants={revealUp}
-                  initial="hidden"
+                  initial={reduceMotion ? false : 'hidden'}
                   whileInView="visible"
                   viewport={{once: true, amount: 0.28}}
                   transition={{delay: index * 0.08}}
@@ -677,26 +686,27 @@ export default function App() {
           </div>
         </section>
 
-        <section id="lps" className="second-fold relative px-8 py-28 md:px-16 lg:px-24">
+        <section id="lps" className="second-fold relative px-4 py-20 md:px-16 md:py-28 lg:px-24">
           <div className="second-fold__veil" aria-hidden="true" />
+          <div className="section-divider mx-auto mb-16 max-w-7xl" aria-hidden="true" />
           <motion.div
-            className="ambient-shadow fold-card relative mx-auto grid max-w-7xl gap-10 overflow-hidden rounded-[2rem] border border-black/5 bg-white/80 p-12 md:grid-cols-[1.35fr_0.65fr]"
+            className="ambient-shadow fold-card relative mx-auto grid max-w-7xl gap-8 overflow-hidden rounded-[2rem] border border-black/5 bg-white/80 p-8 md:grid-cols-[1.35fr_0.65fr] md:gap-10 md:p-12"
             variants={revealUp}
-            initial="hidden"
+            initial={reduceMotion ? false : 'hidden'}
             whileInView="visible"
             viewport={{once: true, amount: 0.3}}
           >
             <div className="absolute top-0 left-0 h-20 w-1 bg-gold" />
             <div>
-              <p className="mb-6 font-headline text-xs font-bold uppercase tracking-[0.2em] text-gold">
+              <p className="mb-4 font-headline text-[11px] font-bold uppercase tracking-[0.18em] text-gold md:mb-6 md:text-xs md:tracking-[0.2em]">
                 For LPs
               </p>
-              <h2 className="mb-6 font-headline text-4xl font-extrabold uppercase tracking-tighter md:text-5xl">
+              <h2 className="mb-6 font-headline text-3xl font-extrabold uppercase tracking-tighter md:text-5xl">
                 Selective Capital
                 <br />
                 Partners
               </h2>
-              <p className="max-w-2xl text-lg leading-relaxed text-muted">
+              <p className="max-w-2xl text-base leading-relaxed text-muted md:text-lg">
                 We are open to selective conversations with LPs and strategic capital partners.
                 That path stays secondary and handled directly.
               </p>
@@ -704,7 +714,7 @@ export default function App() {
             <div className="flex items-end">
               <a
                 href="mailto:partners@emetruth.capital?subject=LP%20Inquiry"
-                className="cta-button inline-flex w-full items-center justify-center rounded-full bg-primary px-10 py-5 font-headline text-xs font-bold uppercase tracking-widest text-white transition-opacity hover:opacity-85"
+                className="cta-button inline-flex min-h-12 w-full items-center justify-center rounded-full bg-primary px-8 py-4 text-center font-headline text-[11px] font-bold uppercase tracking-[0.16em] text-white transition-opacity hover:opacity-85 md:px-10 md:py-5 md:text-xs md:tracking-widest"
               >
                 Inquire As An LP
               </a>
@@ -712,26 +722,27 @@ export default function App() {
           </motion.div>
         </section>
 
-        <section id="contact" className="px-8 py-48 text-center">
+        <section id="contact" className="px-4 py-24 text-center md:px-8 md:py-48">
+          <div className="section-divider mx-auto mb-16 max-w-7xl" aria-hidden="true" />
           <motion.div
             className="mx-auto max-w-4xl"
             variants={revealUp}
-            initial="hidden"
+            initial={reduceMotion ? false : 'hidden'}
             whileInView="visible"
             viewport={{once: true, amount: 0.4}}
           >
-            <h2 className="mb-16 font-headline text-6xl leading-[0.9] font-extrabold uppercase tracking-tighter md:text-8xl">
+            <h2 className="mb-10 font-headline text-4xl leading-[0.9] font-extrabold uppercase tracking-tighter md:mb-16 md:text-8xl">
               Need better
               <br />
               markets?
             </h2>
-            <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted">
+            <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-muted md:mb-12 md:text-lg">
               For conversations around liquidity, partnerships, or capital.
             </p>
             <div className="flex flex-col justify-center gap-6 sm:flex-row">
               <a
                 href="mailto:partners@emetruth.capital"
-                className="cta-button rounded-full bg-gold px-12 py-5 font-headline text-xs font-bold uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
+                className="cta-button w-full rounded-full bg-gold px-8 py-4 text-center font-headline text-[11px] font-bold uppercase tracking-[0.16em] text-primary transition-opacity hover:opacity-80 sm:w-auto md:px-12 md:py-5 md:text-xs md:tracking-widest"
               >
                 Talk To Us
               </a>
@@ -740,29 +751,20 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="relative z-10 flex flex-col items-center justify-between gap-8 bg-surface-elevated px-8 py-12 md:flex-row md:px-16 lg:px-24">
+      <footer className="relative z-10 flex flex-col items-center justify-between gap-6 bg-surface-elevated px-4 py-10 md:gap-8 md:px-16 md:py-12 lg:px-24">
         <div className="font-headline text-lg font-extrabold uppercase tracking-tighter">
           EmeTruth
         </div>
         <div className="flex flex-wrap justify-center gap-8">
-          <a
-            href="#"
-            className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted transition-colors hover:text-gold"
-          >
-            Privacy Policy
-          </a>
-          <a
-            href="#"
-            className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted transition-colors hover:text-gold"
-          >
-            Terms of Service
-          </a>
-          <a
-            href="#"
-            className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted transition-colors hover:text-gold"
-          >
-            Regulatory Disclosures
-          </a>
+          <span className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted/70">
+            Privacy Policy Available On Request
+          </span>
+          <span className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted/70">
+            Terms Available On Request
+          </span>
+          <span className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted/70">
+            Regulatory Disclosures On Request
+          </span>
           <a
             href="#contact"
             className="font-headline text-[10px] font-bold uppercase tracking-widest text-muted transition-colors hover:text-gold"
